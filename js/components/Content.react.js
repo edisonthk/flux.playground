@@ -25,11 +25,15 @@ var Content = React.createClass({
 
 	componentDidMount: function() {
 		// carry out initial canvas animatin here
+		// As ScrollingHandler is using Content component static methods, it needs to be 
+		// used when components is mounted.
 		// console.log(Content.getAnimator());
+		var ScrollingHandler = require('../actions/ScrollingHandler.js');
+		ScrollingHandler.initial();
 	},
 	render: function() {
 		var s1 = {
-			backgroundColor: 'red'
+			// backgroundColor: 'red'
 		};
 		var _canvas_style = {
 			position: 'fixed',
@@ -42,7 +46,7 @@ var Content = React.createClass({
 				<div className='section'>
 				fsdfds	
 				</div>
-				<div className='section' style={{backgroundColor:'red'}}>
+				<div className='section' style={s1}>
 				fsdfds	
 				</div>
 				<div className='section'>

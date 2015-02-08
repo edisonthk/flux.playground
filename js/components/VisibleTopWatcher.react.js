@@ -11,7 +11,7 @@ var VisibleTopWatcher = React.createClass({
 		// http://facebook.github.io/react/docs/component-specs.html
 		var _this = this;
 		_this.intervalId = setInterval(function(){
-			if(_this.currentTop !== window.pageYOffset && window.pageYOffset >= 0){
+			if(_this.currentTop !== window.pageYOffset){
 				_this.currentTop = window.pageYOffset;
 
 				if(typeof _this.props.visibleTopOnChange === 'function'){

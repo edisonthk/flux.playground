@@ -1,11 +1,11 @@
 var React = require('react');
 var VisibleTopWatcher = require('./components/VisibleTopWatcher.react');
 var Content = require('./components/Content.react');
-var ScrollingEvent = require('./actions/ScrollingEvent.js');
+var ScrollingHandler = require('./actions/ScrollingHandler.js');
 
 React.render(
 	<div>
-  		<VisibleTopWatcher visibleTopOnChange={ScrollingEvent}/>
+  		<VisibleTopWatcher visibleTopOnChange={ScrollingHandler._event}/>
   		<Content />
   	</div>,
   document.getElementsByTagName('main')[0]
