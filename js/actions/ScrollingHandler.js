@@ -4,6 +4,7 @@ var section_imgs = [],
 	section_height = 700,   // Number: each section height in term of px
 	pixel_per_frame, 		// Number: term of how many pixel height for each frame. It is defined as section_height/number_of_frames_per_section
 	current_section,
+	bottom_textboxs,
 	leading_zero;
 section_imgs[0] = [];
 
@@ -11,21 +12,36 @@ var playAnimation = function(section, top, _c) {
 	current_section = section;
 	pixel_per_frame = section_height / section_imgs[current_section].length;	
 	var frame_play = parseInt((top % (section_imgs[current_section].length * pixel_per_frame))/pixel_per_frame);
-	console.log(frame_play);
+	// console.log(top);
 	if(frame_play >= 0){
 		var ctx = _c.getContext("2d");
 
 		// retrieve frame size
 		var frame_width = _c.width, 
-			frame_height = _c.width,
+			frame_height = _c.width * 380 / 470,
 			offset_left = 0, 
 			offset_top = 0;
 
-		if(_c.width >= 500){
-			frame_width = 500;
-			frame_height = 500;
+		if(_c.width >= 470){
+			// tablet
+			frame_width = 470;
+
+			if(_c.width >= 1000) {
+				// large desktop
+				frame_width = 850;
+			}else if(_c.width >= 720){
+				// desktop
+				frame_width = 600;
+			}
+			// auto height as given ratio
+			frame_height = frame_width * 380 / 470;
 			offset_left = (_c.width - frame_width) / 2;
-			console.log(offset_left + " " + _c.width);
+		}
+
+		if(top < 300){
+			var middle_top = (_c.height - frame_height)/2;
+
+			offset_top = middle_top - (middle_top / 300 * top);
 		}
 
 		// playing frame
@@ -38,36 +54,103 @@ var ScrollingHandler = {
 	_event: function(top) {
 		var _c = Content.getAnimator();
 		
+		if(top <= 200) {
+			var es = document.getElementsByClassName('title')
+			for (var i = 0; i < es.length; i++) {
+				es[i].style.display = 'block';
+				es[i].style.opacity = 1.0 - (top/200.0);
+			};
+		}else{
+			var es = document.getElementsByClassName('title')
+			for (var i = 0; i < es.length; i++) {
+				es[i].style.display = 'none';
+			};
+		}
+
+		// canvas animation
 		if(top <= 0) {
 			var ctx = _c.getContext("2d");
 			ctx.clearRect ( 0 , 0 , _c.width, _c.height );
 		}else if(top > 0 && top < section_height) {
 			// section one
 			playAnimation(0 ,top, _c);
-		}else if(top > (section_height) && top < (section_height*2)) {
+		}else if(top > (section_height) && top <= (section_height*2)) {
+			// section two
 			playAnimation(1 ,top, _c);
+		}else if(top > (section_height*2) && top <= (section_height*3)) {
+			// section three
+			playAnimation(2 ,top, _c);
+		}	
+
+		// text at bottom
+		if(_c.width < 500) {
+			
+			for(var i = 0; i < bottom_textboxs.length; i += 1){
+				var textbox_top = bottom_textboxs[i].getBoundingClientRect().top;
+				console.log(i + " "+ textbox_top);
+				if(textbox_top < section_height / 2){
+					var offset = 200;
+					var decline_vertical = (section_height / 2 ) - offset;
+					var opacity = (textbox_top - offset) / decline_vertical;
+					if(opacity <= 0){
+						bottom_textboxs[i].style.opacity = 0.0;
+					}else{
+						bottom_textboxs[i].style.opacity = opacity;
+					}
+					
+				}else{
+					bottom_textboxs[i].style.opacity = 1.0;
+				}
+			}
 		}
 		
 	},
 	initial: function() {
+
+		bottom_textboxs = document.getElementsByClassName('bottom');
+
 		// load image
 		// section 1 image
-		for (var i = 0; i < 36; i++) {
-			leading_zero = "000000" + i;
-			leading_zero = leading_zero.substr(leading_zero.length - 2);
+		for (var i = 0; i < 42; i++) {
+			if(i < 32){
+				// unsaturated state
+				leading_zero = "000000" + i;	
+			}else{
+				// saturated state
+				leading_zero = "00000031";
+			}
+			
+			leading_zero = leading_zero.substr(leading_zero.length - 3);
 
 			section_imgs[0][i] = new Image();
-			section_imgs[0][i].src = "frames/obj1/名称未設定%20100"+leading_zero+".png";
+			section_imgs[0][i].src = "frames/obj1/reactjs_explain0"+leading_zero+".png";
 		};
 
 		// section 2 image
 		section_imgs[1] = [];
-		for (var i = 0; i < 46; i++) {
-			leading_zero = "000000" + (i + 47);
-			leading_zero = leading_zero.substr(leading_zero.length - 2);
+		for (var i = 0; i < 65; i++) {
+
+			if(i < 53){
+				// unsaturated state
+				leading_zero = "000000" + (i + 62);
+			}else{
+				// saturated state
+				leading_zero = "000000114";
+			}
+			leading_zero = leading_zero.substr(leading_zero.length - 3);
 
 			section_imgs[1][i] = new Image();
-			section_imgs[1][i].src = "frames/obj1/名称未設定%20100"+leading_zero+".png";
+			section_imgs[1][i].src = "frames/obj1/reactjs_explain0"+leading_zero+".png";
+		};
+
+		// section 3 image
+		section_imgs[2] = [];
+		for (var i = 0; i < 62; i++) {
+			leading_zero = "000000" + (i + 151);
+			leading_zero = leading_zero.substr(leading_zero.length - 3);
+
+			section_imgs[2][i] = new Image();
+			section_imgs[2][i].src = "frames/obj1/reactjs_explain0"+leading_zero+".png";
 		};
 
 		// initial text

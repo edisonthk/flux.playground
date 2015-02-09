@@ -66,9 +66,7 @@ var Content = React.createClass({
 						<p>つまり、React.jsを使えば簡単にコンポーネントのリサイクルができます。</p>
 					</div>
 				</div>
-				<div className='section'>
-				fsdfds	
-				</div>
+
 				<canvas id='animator' style={_canvas_style} width={this.state.windowWidth} height={this.state.windowHeight}></canvas>
 			</div>
 		);
