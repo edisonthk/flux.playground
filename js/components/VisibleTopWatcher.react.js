@@ -1,9 +1,19 @@
 var React = require('react');
+var MobileDetect = require('mobile-detect'),
+	md = new MobileDetect(navigator.userAgent) ;
+
+intervalPeriod = 70;
+if(md.mobile()){
+	console.log("is mobile");
+	intervalPeriod = 200;
+}else{
+	console.log("is desktop");
+}
 
 var VisibleTopWatcher = React.createClass({
 
 	currentTop: 0, // private data for VisibleTopWatcher Class
-	intervalPeriod: 100,  // period
+	intervalPeriod: intervalPeriod,  // period
 	componentDidMount: function(){
 
 		// Invoked once and only in client when components is loaded into client

@@ -5,6 +5,8 @@ var section_imgs = [],
 	pixel_per_frame, 		// Number: term of how many pixel height for each frame. It is defined as section_height/number_of_frames_per_section
 	current_section,
 	bottom_textboxs,
+	max_frame_index,		// Max frame have
+	num_sections,			// Number of section have in this page
 	leading_zero;
 section_imgs[0] = [];
 
@@ -12,7 +14,7 @@ var playAnimation = function(section, top, _c) {
 	current_section = section;
 	pixel_per_frame = section_height / section_imgs[current_section].length;	
 	var frame_play = parseInt((top % (section_imgs[current_section].length * pixel_per_frame))/pixel_per_frame);
-	// console.log(top);
+	
 	if(frame_play >= 0){
 		var ctx = _c.getContext("2d");
 
@@ -38,10 +40,18 @@ var playAnimation = function(section, top, _c) {
 			offset_left = (_c.width - frame_width) / 2;
 		}
 
+		// offset_top configuration
 		if(top < 300){
 			var middle_top = (_c.height - frame_height)/2;
 
 			offset_top = middle_top - (middle_top / 300 * top);
+		}
+		
+
+		// animation at very bottom configuration
+		if(top >= section_imgs.length * section_height ){
+			// make sure the last animation remains showing
+			frame_play = section_imgs[current_section].length - 1;
 		}
 
 		// playing frame
@@ -77,24 +87,22 @@ var ScrollingHandler = {
 		}else if(top > (section_height) && top <= (section_height*2)) {
 			// section two
 			playAnimation(1 ,top, _c);
-		}else if(top > (section_height*2) && top <= (section_height*3)) {
+		}else if(top > (section_height*2)) {
 			// section three
 			playAnimation(2 ,top, _c);
-		}	
+		}
 
 		// text at bottom
 		var offset = 200;
 		var triggle_height = section_height / 2;
 		if(_c.width > 500) {
-			console.log("fds");
 			triggle_height = 600;
 			offset = 300;
 		}
 
 		for(var i = 0; i < bottom_textboxs.length; i += 1){
 			var textbox_top = bottom_textboxs[i].getBoundingClientRect().top;
-			// console.log(i + " "+ textbox_top);
-			if(textbox_top < triggle_height){
+			if(textbox_top < triggle_height && section_imgs.length * section_height > top){
 				// var offset = 200;
 				var decline_vertical = (section_height / 2 ) - offset;
 				var opacity = (textbox_top - offset) / decline_vertical;
@@ -111,7 +119,7 @@ var ScrollingHandler = {
 		
 	},
 	initial: function() {
-
+		max_frame_index = 0;
 		bottom_textboxs = document.getElementsByClassName('bottom');
 
 		// load image
@@ -129,6 +137,7 @@ var ScrollingHandler = {
 
 			section_imgs[0][i] = new Image();
 			section_imgs[0][i].src = "frames/obj1/reactjs_explain0"+leading_zero+".png";
+			max_frame_index += 1;
 		};
 
 		// section 2 image
@@ -146,6 +155,7 @@ var ScrollingHandler = {
 
 			section_imgs[1][i] = new Image();
 			section_imgs[1][i].src = "frames/obj1/reactjs_explain0"+leading_zero+".png";
+			max_frame_index += 1;
 		};
 
 		// section 3 image
@@ -156,7 +166,9 @@ var ScrollingHandler = {
 
 			section_imgs[2][i] = new Image();
 			section_imgs[2][i].src = "frames/obj1/reactjs_explain0"+leading_zero+".png";
+			max_frame_index += 1;
 		};
+
 
 		// initial text
 		// var _c = Content.getAnimator();
