@@ -43,7 +43,6 @@ var playAnimation = function(section, top, _c) {
 		// offset_top configuration
 		if(top < 300){
 			var middle_top = (_c.height - frame_height)/2;
-
 			offset_top = middle_top - (middle_top / 300 * top);
 		}
 		
@@ -102,6 +101,7 @@ var ScrollingHandler = {
 
 		for(var i = 0; i < bottom_textboxs.length; i += 1){
 			var textbox_top = bottom_textboxs[i].getBoundingClientRect().top;
+			// console.log(bottom_textboxs[i].className + " " + bottom_textboxs[i].getBoundingClientRect().top);
 			if(textbox_top < triggle_height && section_imgs.length * section_height > top){
 				// var offset = 200;
 				var decline_vertical = (section_height / 2 ) - offset;

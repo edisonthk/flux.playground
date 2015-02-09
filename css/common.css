@@ -47,3 +47,21 @@ h1 {
 	display: block;
 	text-align: center;
 }
+
+/* Desktop */
+.only-small {
+	display: none;
+}
+.only-large {
+	display: block;
+}
+
+@media (max-width: 768px) {
+	/* Mobile */
+	.only-large {
+		display: none;
+	}
+	.only-small {
+		display: block;
+	}
+}
