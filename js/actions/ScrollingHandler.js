@@ -28,7 +28,7 @@ var playAnimation = function(section, top, _c) {
 
 			if(_c.width >= 1000) {
 				// large desktop
-				frame_width = 850;
+				frame_width = 600;
 			}else if(_c.width >= 720){
 				// desktop
 				frame_width = 600;
@@ -83,24 +83,29 @@ var ScrollingHandler = {
 		}	
 
 		// text at bottom
-		if(_c.width < 500) {
-			
-			for(var i = 0; i < bottom_textboxs.length; i += 1){
-				var textbox_top = bottom_textboxs[i].getBoundingClientRect().top;
-				console.log(i + " "+ textbox_top);
-				if(textbox_top < section_height / 2){
-					var offset = 200;
-					var decline_vertical = (section_height / 2 ) - offset;
-					var opacity = (textbox_top - offset) / decline_vertical;
-					if(opacity <= 0){
-						bottom_textboxs[i].style.opacity = 0.0;
-					}else{
-						bottom_textboxs[i].style.opacity = opacity;
-					}
-					
+		var offset = 200;
+		var triggle_height = section_height / 2;
+		if(_c.width > 500) {
+			console.log("fds");
+			triggle_height = 600;
+			offset = 300;
+		}
+
+		for(var i = 0; i < bottom_textboxs.length; i += 1){
+			var textbox_top = bottom_textboxs[i].getBoundingClientRect().top;
+			// console.log(i + " "+ textbox_top);
+			if(textbox_top < triggle_height){
+				// var offset = 200;
+				var decline_vertical = (section_height / 2 ) - offset;
+				var opacity = (textbox_top - offset) / decline_vertical;
+				if(opacity <= 0){
+					bottom_textboxs[i].style.opacity = 0.0;
 				}else{
-					bottom_textboxs[i].style.opacity = 1.0;
+					bottom_textboxs[i].style.opacity = opacity;
 				}
+				
+			}else{
+				bottom_textboxs[i].style.opacity = 1.0;
 			}
 		}
 		
