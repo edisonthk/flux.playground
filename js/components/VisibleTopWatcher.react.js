@@ -2,13 +2,13 @@ var React = require('react');
 var MobileDetect = require('mobile-detect'),
 	md = new MobileDetect(navigator.userAgent) ;
 
-intervalPeriod = 70;
-if(md.mobile()){
-	console.log("is mobile");
-	intervalPeriod = 200;
-}else{
-	console.log("is desktop");
-}
+intervalPeriod = 1000 / 30;
+// if(md.mobile()){
+// 	console.log("is mobile");
+// 	intervalPeriod = 200;
+// }else{
+// 	console.log("is desktop");
+// }
 
 var VisibleTopWatcher = React.createClass({
 
