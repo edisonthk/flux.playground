@@ -68,6 +68,9 @@ var Content = React.createClass({
 					<div className='bottom only-small'>
 						<p>Component contains JavaScript and HTML can be placed in single JS file.</p>
 						<p>JavaScriptとHTMLで構成したコンポーネントは一つJSファイルにまとめることができます。</p>
+						<br />
+						<br />
+						<br />
 					</div>
 				</div>
 				<div className='section'>
