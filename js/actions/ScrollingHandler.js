@@ -118,6 +118,9 @@ var ScrollingHandler = {
 		}
 		
 	},
+	forceFireEvent: function(){
+		this._event(window.pageYOffset);
+	},
 	initial: function() {
 		max_frame_index = 0;
 		bottom_textboxs = document.getElementsByClassName('bottom');

@@ -12,8 +12,16 @@ var DelayResizeMixin = {
 			windowHeight: window.innerHeight
 		}
 	},
+
+	// Used this function
+	// sizingEvent function
+	// 
 	componentDidMount: function() {
-		window.addEventListener('resize', this.handleResize);
+		var _this = this;
+		// if(typeof _this.sizingEvent === 'function'){
+		// 	_this.sizingEvent();
+		// }
+		window.addEventListener('resize', _this.handleResize);
 	},
 	handleResize: function() {
 		var _this = this;
@@ -23,7 +31,12 @@ var DelayResizeMixin = {
 				windowWidth: window.innerWidth,
 				windowHeight: window.innerHeight
 			});
-		}, this.delay); 
+
+			if(typeof _this.sizingEvent === 'function'){
+				_this.sizingEvent();
+			}
+
+		}, _this.delay); 
 	},
 	componentDidUnmount: function() {
 		window.removeEventListener('resize', this.handleResize);

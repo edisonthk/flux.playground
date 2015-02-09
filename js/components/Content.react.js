@@ -23,14 +23,20 @@ var Content = React.createClass({
 	// http://facebook.github.io/react/docs/reusable-components.html#mixins
 	mixins: [DelayResizeMixin],
 
+	sizingEvent: function() {
+		this.ScrollingHandler.forceFireEvent();
+	},
+
 	componentDidMount: function() {
 		// carry out initial canvas animatin here
 		// As ScrollingHandler is using Content component static methods, it needs to be 
 		// used when components is mounted.
 		// console.log(Content.getAnimator());
-		var ScrollingHandler = require('../actions/ScrollingHandler.js');
-		ScrollingHandler.initial();
+		this.ScrollingHandler = require('../actions/ScrollingHandler.js');
+		this.ScrollingHandler.initial();
+		this.sizingEvent();
 	},
+
 	render: function() {
 		var s1 = {
 			// backgroundColor: 'red'
